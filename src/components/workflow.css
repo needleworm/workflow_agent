@@ -1,0 +1,363 @@
+/* ========================
+   레이아웃 기본
+======================== */
+.wf-root {
+    max-width: 800px;
+    /* 너비 제한 */
+    margin: 0 auto;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.wf-block+.wf-block {
+    margin-top: 24px;
+}
+
+.wf-node {
+    position: relative;
+    margin-left: 16px;
+    padding-left: 16px;
+    border-left: 2px dotted #a8c7d2;
+}
+
+.wf-node-root {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: none;
+}
+
+.wf-children {
+    margin-left: 12px;
+    padding-left: 12px;
+    border-left: 2px dotted #cfe0e7;
+}
+
+/* 한 줄 레이아웃: 입력박스 + (평가/+-) 버튼들 */
+.wf-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+    min-width: 0;
+    /* flex item 줄바꿈 안정화 */
+}
+
+/* ========================
+   입력박스 & 내부 평가버튼
+======================== */
+.wf-box-wrap {
+    position: relative;
+    flex: 1;
+    /* 오른쪽 버튼들과 공간 나눔 */
+    min-width: 0;
+}
+
+.wf-box {
+    width: 100%;
+    border: 2px solid #2c6173;
+    border-radius: 10px;
+    padding: 10px 72px 10px 12px;
+    /* 👉 내부 평가 버튼 자리 확보 */
+    font-size: 16px;
+    line-height: 22px;
+    box-sizing: border-box;
+    background: #fff;
+    color: #000;
+    outline: none;
+    word-break: break-word;
+    white-space: normal;
+}
+
+.wf-box-title {
+    font-weight: 700;
+}
+
+/* 입력되기 전 표시용 깜빡임 */
+@keyframes blinkText {
+    0% {
+        opacity: 1
+    }
+
+    50% {
+        opacity: .45
+    }
+
+    100% {
+        opacity: 1
+    }
+}
+
+.wf-blink {
+    animation: blinkText 1s infinite;
+    color: #0e6ea8;
+}
+
+/* 박스 내부 오른쪽 고정 평가 버튼 */
+.wf-eval-inside {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    height: 28px;
+    padding: 0 10px;
+    font-size: 12px;
+    border: 1.5px solid #2c6173;
+    border-radius: 6px;
+    background: #f2f6f8;
+    color: #1c2c34;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all .15s ease-in-out;
+}
+
+.wf-eval-inside:hover {
+    background: #2c6173;
+    color: #fff;
+}
+
+/* ========================
+   오른쪽 액션 버튼들
+======================== */
+.wf-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    /* 버튼 폭 고정 */
+}
+
+.wf-btn {
+    width: 34px;
+    height: 34px;
+    border: 2px solid #2c6173;
+    background: #fff;
+    color: #2c6173;
+    border-radius: 50%;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    transition: filter .12s ease-in-out;
+}
+
+.wf-btn:hover {
+    filter: brightness(.96);
+}
+
+/* ========================
+   깊이별 색상(요청안)
+   (0) 보라/흰, (1) 진회색/흰, (2) 연회색/흰, (3+) 흰/검
+======================== */
+.depth-0 .wf-box {
+    background: #2b167e;
+    /* 진한 보라 */
+    color: #fff;
+    font-weight: 700;
+    border-color: #2b167e;
+}
+
+.depth-1 .wf-box {
+    background: #1f4e70;
+    /* 짙은 청회 */
+    color: #fff;
+    border-color: #1f4e70;
+}
+
+.depth-2 .wf-box {
+    background: #aab9c3;
+    /* 연회색 */
+    color: #fff;
+    border-color: #8ea2af;
+}
+
+.depth-3 .wf-box,
+.depth-4 .wf-box,
+.depth-5 .wf-box {
+    background: #fff;
+    color: #000;
+    border-color: #2c6173;
+}
+
+/* 부드러운 전환 */
+.wf-box {
+    transition: background-color .2s, color .2s, border-color .2s;
+}
+
+/* 모달 */
+.wf-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.wf-modal {
+    background: #fff;
+    width: min(760px, 92vw);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .25);
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.wf-modal-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wf-modal-body {
+    padding: 16px;
+    overflow: auto;
+    white-space: pre-wrap;
+}
+
+.wf-modal-close {
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.wf-loading {
+    font-size: 16px;
+    color: #111827;
+}
+
+.wf-dots {
+    display: inline-block;
+    width: 1.2em;
+    /* 점 영역 고정해서 텍스트 흔들림 방지 */
+    margin-left: 2px;
+    letter-spacing: 2px;
+}
+
+/* 로딩 문구에 은은한 펄스 */
+.wf-loading {
+    animation: wfPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes wfPulse {
+    0% {
+        opacity: 0.65;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.65;
+    }
+}
+
+/* 상단 툴바 */
+.wf-toolbar {
+    max-width: 800px;
+    margin: 0 auto 8px auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+/* 버튼 공통 */
+.wf-primary,
+.wf-btn-primary,
+.wf-btn-secondary {
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+}
+
+.wf-primary,
+.wf-btn-primary {
+    background: #2c6173;
+    color: #fff;
+    border-color: #2c6173;
+}
+
+.wf-primary:hover,
+.wf-btn-primary:hover {
+    filter: brightness(0.95);
+}
+
+.wf-btn-secondary {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-color: #cbd5e1;
+}
+
+.wf-btn-secondary:hover {
+    filter: brightness(0.98);
+}
+
+/* 툴바 */
+.wf-toolbar {
+    max-width: 800px;
+    margin: 0 auto 8px auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+/* 버튼 */
+.wf-secondary {
+    background: #f1f5f9;
+    color: #0f172a;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.wf-secondary:hover {
+    filter: brightness(0.98);
+}
+
+/* 모델 드롭다운 */
+.wf-model-switch {
+    position: relative;
+}
+
+.wf-dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    min-width: 160px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+    padding: 6px;
+    z-index: 10000;
+}
+
+.wf-dropdown-item {
+    width: 100%;
+    text-align: left;
+    padding: 8px 10px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.wf-dropdown-item:hover {
+    background: #f3f4f6;
+}
+
+.wf-dropdown-item.active {
+    background: #e2e8f0;
+    font-weight: 600;
+}

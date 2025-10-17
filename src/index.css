@@ -1,0 +1,24 @@
+/* 전역 초기화 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Vite 템플릿이 준 #root 제약 해제 */
+#root {
+  max-width: none;
+  /* 1280px 제한 제거 */
+  padding: 0;
+  /* 2rem 패딩 제거 */
+  margin: 0;
+  /* 가운데 정렬 제거 */
+}
